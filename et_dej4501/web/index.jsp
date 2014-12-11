@@ -7,6 +7,7 @@
         <title>ET DEJ4501 - 2014</title>
     </head>
     <body>
+        <%@include file="WEB-INF/menu.jspf" %>
         <h1>ET DEJ4501 - 2014</h1>
         <h2>Prueba de Conexión a la Base de Datos</h2>
         <pre><c:out value="${estadoConexion}" /></pre>

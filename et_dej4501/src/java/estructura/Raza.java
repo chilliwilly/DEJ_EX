@@ -1,14 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package estructura;
 
-/**
- *
- * @author VSPC
- */
 public class Raza {
-    
+    private int id_raza;
+    private String nombre_raza;
+
+    public Raza() {
+    }
+
+    public Raza(int id_raza, String nombre_raza) {
+        this.id_raza = id_raza;
+        this.nombre_raza = nombre_raza;
+    }
+
+    public int getId_raza() {
+        return id_raza;
+    }
+
+    public void setId_raza(int id_raza) {
+        this.id_raza = id_raza;
+    }
+
+    public String getNombre_raza() {
+        return nombre_raza;
+    }
+
+    public void setNombre_raza(String nombre_raza) {
+        this.nombre_raza = nombre_raza;
+    }
 }

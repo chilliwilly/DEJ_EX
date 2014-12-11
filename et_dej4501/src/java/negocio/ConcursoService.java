@@ -1,14 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package negocio;
 
-/**
- *
- * @author VSPC
- */
+import dao.*;
+import estructura.*;
+import java.sql.Connection;
+import java.util.ArrayList;
+
 public class ConcursoService {
+    private Connection cnx;
+
+    public ConcursoService(Connection cnx) {
+        this.cnx = cnx;
+    }
     
+    public ArrayList<Raza> lsRaza()
+    {
+        AgregarDAO dao = new AgregarDAO(cnx);
+        return dao.listaRaza();
+    }   
+    
+    public ArrayList<Participante> lsParticipante(String cod)
+    {
+        ListarDAO dao = new ListarDAO(cnx);
+        String cod_r = "";
+        if(cod.equals("0"))
+        {
+            cod_r = "%";
+        }
+        else
+        {
+            cod_r = cod;
+        }
+        return dao.lsParticipantes(cod_r);
+    }
 }
