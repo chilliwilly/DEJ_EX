@@ -55,12 +55,22 @@
                                 <td><c:out value="${lp.raza.nombre_raza}"/></td>
                                 <td><c:out value="${lp.id_participante}"/></td>
                                 <td><fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${lp.fecha_registro}"/></td>
-                                <td><input type="button" value="Eliminar"/></td>
+                                <td>
+                                    <c:url var="borrarParticipante" value="/BorrarServlet">
+                                        <c:param name="codp" value="${lp.id_participante}"/>                                           
+                                    </c:url>
+                                    <a href="${borrarParticipante}">
+                                        <button type="button">
+                                            Eliminar
+                                        </button>
+                                    </a>
+                                </td>
                             </tr>   
                         </c:forEach>
                     </table>
                 </c:if>
             </c:otherwise>
         </c:choose>
+        <c:out value="${mensaje}"/>
     </body>
 </html>

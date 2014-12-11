@@ -32,4 +32,10 @@ public class ConcursoService {
         }
         return dao.lsParticipantes(cod_r);
     }
+    
+    public void eliminar(int cod)
+    {
+        ListarDAO dao = new ListarDAO(cnx);
+        dao.eliminarParticipante(cod);
+    }
 }

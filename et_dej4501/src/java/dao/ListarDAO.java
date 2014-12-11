@@ -62,4 +62,15 @@ public class ListarDAO {
         }
         return raza;
     }
+    
+    public void eliminarParticipante(int cod)
+    {        
+        String sql = "DELETE FROM PARTICIPANTE WHERE ID_PARTICIPANTE = ?;";
+        try (PreparedStatement stmt = cnx.prepareStatement(sql)){
+            stmt.setInt(1, cod);
+            stmt.executeUpdate();
+        } catch (Exception ex) {
+            throw new RuntimeException("Error al Eliminar", ex);
+        }
+    }
 }
