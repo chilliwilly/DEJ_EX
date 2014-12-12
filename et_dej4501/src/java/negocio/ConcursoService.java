@@ -38,4 +38,10 @@ public class ConcursoService {
         ListarDAO dao = new ListarDAO(cnx);
         dao.eliminarParticipante(cod);
     }
+    
+    public void agregarConcursante(Participante p)
+    {
+        AgregarDAO dao = new AgregarDAO(cnx);
+        dao.agregarParicipante(p);
+    }
 }
