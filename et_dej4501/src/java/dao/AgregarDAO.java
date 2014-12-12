@@ -38,7 +38,15 @@ public class AgregarDAO {
     
     public void agregarParicipante(Participante p)
     {
-    
+        String sql = "INSERT INTO PARTICIPANTE VALUES (NULL,?,?,SYSDATE,?);";
+        try (PreparedStatement stmt = cnx.prepareStatement(sql)){
+            stmt.setString(1, p.getNombre_participante());
+            stmt.setInt(2, p.getId_resgistro());
+            stmt.setInt(3, p.getRaza().getId_raza());
+            stmt.executeUpdate();
+        } catch (Exception ex) {
+            throw new RuntimeException("Error al Insertar Participante", ex);
+        }
     }
     
     public ArrayList<Integer> listaRegParticipante()
