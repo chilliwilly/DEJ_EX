@@ -15,17 +15,24 @@
                     <td>Nombre</td>
                     <td>:</td>
                     <td>
-                        <input type="text" required="true" maxlength="50" placeholder="Ingrese Nombre"/>
+                        <input type="text" name="txtNombre" required="true" value="${nombre}" maxlength="50" placeholder="Ingrese Nombre"/>
                     </td>
                 </tr>
                 <tr>
                     <td>Raza</td>
                     <td>:</td>
                     <td>
-                        <select name="cboRaza">
+                        <select name="cboRaza" required="true">
                             <option value="">Seleccione</option>
                             <c:forEach items="${lista}" var="lr">
-                                <option value="${lr.id_raza}"><c:out value="${lr.nombre_raza}"/></option>
+                                <c:choose>
+                                    <c:when test="${lr.id_raza == razaid}">
+                                        <option value="${lr.id_raza}" selected="selected"><c:out value="${lr.nombre_raza}"/></option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="${lr.id_raza}"><c:out value="${lr.nombre_raza}"/></option>
+                                    </c:otherwise>
+                                </c:choose>                                
                             </c:forEach>
                         </select>
                     </td>
@@ -34,7 +41,7 @@
                     <td>ID Reg.</td>
                     <td>:</td>
                     <td>
-                        <input type="number" required="true" pattern="[0-9]" 
+                        <input type="number" name="txtReg" value="${registro}" required="true" pattern="[0-9]" 
                                placeholder="Ingrese ID Registro"/>
                     </td>
                 </tr>
@@ -45,6 +52,8 @@
                     </td>                    
                 </tr>
             </table>
+            <br><br>
+            <c:out value="${mensaje}"/>
         </form>
     </body>
 </html>

@@ -31,11 +31,12 @@ public class ListarServlet extends HttpServlet {
             }
             
             ArrayList<Raza> r = service.lsRaza();
+            request.setAttribute("mensaje", request.getParameter("mensaje"));
             request.setAttribute("lista",r);
             request.getRequestDispatcher("/listado.jsp").forward(request, response);
             
         } catch (Exception ex) {
-            throw new RuntimeException("Error Get", ex);
+            throw new RuntimeException("Error Get Listar Servlet", ex);
         }
     }
 }

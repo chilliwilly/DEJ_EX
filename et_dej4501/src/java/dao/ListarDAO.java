@@ -17,7 +17,7 @@ public class ListarDAO {
     public ArrayList<Participante> lsParticipantes(String cod_raza)
     {        
         ArrayList<Participante> lsp = new ArrayList<>();
-        String sql = "SELECT * FROM PARTICIPANTE WHERE ID_RAZA LIKE ? ORDER BY ID_PARTICIPANTE ASC;";
+        String sql = "SELECT * FROM PARTICIPANTE WHERE ID_RAZA LIKE ? ORDER BY FECHA_REGISTRO ASC;";
         try (PreparedStatement stmt = cnx.prepareStatement(sql)){
             stmt.setString(1, cod_raza);            
             try(ResultSet rs = stmt.executeQuery())

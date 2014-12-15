@@ -38,7 +38,7 @@ public class AgregarDAO {
     
     public void agregarParicipante(Participante p)
     {
-        String sql = "INSERT INTO PARTICIPANTE VALUES (NULL,?,?,SYSDATE,?);";
+        String sql = "INSERT INTO PARTICIPANTE VALUES (NULL,?,?,NOW(),?);";
         try (PreparedStatement stmt = cnx.prepareStatement(sql)){
             stmt.setString(1, p.getNombre_participante());
             stmt.setInt(2, p.getId_resgistro());
@@ -47,6 +47,26 @@ public class AgregarDAO {
         } catch (Exception ex) {
             throw new RuntimeException("Error al Insertar Participante", ex);
         }
+    }
+    
+    public int selectLastId()
+    {
+        ResultSet rs = null;
+        int idp = 0;
+        String sql = "SELECT LAST_INSERT_ID()";
+        try(PreparedStatement stmt = cnx.prepareStatement(sql))
+        {
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                idp = rs.getInt(1);
+            }
+        }
+        catch(Exception ex)
+        {
+            throw new RuntimeException("Error al Recuperar ID ", ex);
+        }
+        return idp;
     }
     
     public ArrayList<Integer> listaRegParticipante()

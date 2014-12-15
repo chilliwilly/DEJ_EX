@@ -2,9 +2,8 @@ package web.servlet;
 
 import estructura.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
-import java.util.ArrayList;
+import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,13 +28,57 @@ public class AgregarServlet extends HttpServlet {
             request.getRequestDispatcher("/ingreso.jsp").forward(request, response);
             
         } catch (Exception ex) {
-            throw new RuntimeException("Error Get", ex);
+            throw new RuntimeException("Error Get Agregar Servlet", ex);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("ingreso.jsp").forward(request, response);
+        String nom = request.getParameter("txtNombre");
+        int idraza = Integer.parseInt(request.getParameter("cboRaza"));
+        int idreg = Integer.parseInt(request.getParameter("txtReg"));        
+        String txt = "";
+        
+        try (Connection cnx = ds.getConnection()){            
+            ConcursoService service = new ConcursoService(cnx);
+            Participante p = new Participante();
+            p.setNombre_participante(nom);
+            p.setRaza(new Raza(idraza, null));
+            p.setId_resgistro(idreg);            
+            
+            if(service.validaParticipante(idreg))
+            {
+                request.setAttribute("nombre", nom);
+                request.setAttribute("razaid", idraza);
+                request.setAttribute("registro", idreg);
+                txt = "ID Registro Participante Ya Existe";
+                System.out.println("MENSAJE PROGRAMA: ID Registro Participante Ya Existe");
+            }
+            else if(idreg <= 0)
+            {
+                request.setAttribute("nombre", nom);
+                request.setAttribute("razaid", idraza);
+                request.setAttribute("registro", idreg);
+                txt = "ID Registro Participante No Puede Ser Igual o Menor Que 0";
+                System.out.println("MENSAJE PROGRAMA: ID Registro Participante No Puede Ser Igual o Menor Que 0");
+            }
+            else
+            {
+                service.agregarConcursante(p);
+                int id = service.getIdConcursante();
+                txt = "Participante Ingresado Exitosamente Con ID Nro: " + id;
+                System.out.println("MENSAJE PROGRAMA: Participante Ingresado Exitosamente Con ID Nro: " + id);
+            }
+            
+            ArrayList<Raza> r = service.lsRaza();
+            request.setAttribute("lista",r);
+            
+            request.setAttribute("mensaje", txt);
+            request.getRequestDispatcher("/ingreso.jsp").forward(request, response);
+            
+        } catch (Exception ex) {
+            throw new RuntimeException("Error Post Agregar Servlet", ex);
+        }
     }
 }

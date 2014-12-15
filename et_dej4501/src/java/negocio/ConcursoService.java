@@ -44,4 +44,26 @@ public class ConcursoService {
         AgregarDAO dao = new AgregarDAO(cnx);
         dao.agregarParicipante(p);
     }
+    
+    public boolean validaParticipante(int reg)
+    {
+        ListarDAO dao = new ListarDAO(cnx);
+        boolean existe = false;
+        
+        for(Participante p : dao.lsParticipantes("%"))
+        {
+            if(p.getId_resgistro() == reg)
+            {
+                existe = true;
+                break;
+            }
+        }
+        return existe;
+    }
+    
+    public int getIdConcursante()
+    {
+        AgregarDAO dao = new AgregarDAO(cnx);
+        return dao.selectLastId();
+    }
 }
